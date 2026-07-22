@@ -100,61 +100,22 @@
   .work-tab.active{ background:var(--ink); color:var(--ivory); border-color:var(--ink); }
   .work-tab:hover:not(.active){ border-color:var(--ink); color:var(--ink); }
 
-  /* gallery grid of IG cards */
-  .gallery{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px; }
-  .ig-card{
-    position:relative; aspect-ratio:4/5; overflow:hidden; cursor:pointer;
-    border:1px solid var(--line); background:linear-gradient(150deg, var(--maroon) 0%, var(--maroon-deep) 100%);
-    display:flex; flex-direction:column; justify-content:space-between; padding:14px;
-    transition:transform .3s ease, box-shadow .3s ease;
+  /* gallery grid of real Instagram embeds */
+  .gallery{ columns:3 300px; column-gap:20px; }
+  .ig-embed-wrap{
+    break-inside:avoid; margin-bottom:20px; border:1px solid var(--line); background:var(--card);
+    display:flex; flex-direction:column; overflow:hidden;
   }
-  .ig-card:nth-child(3n+2){ background:var(--cream); border-color:var(--red); }
-  .ig-card:nth-child(3n+2) .badge{ background:rgba(112,12,12,0.14); color:var(--red); }
-  .ig-card:nth-child(3n+2) .idx{ color:var(--black); }
-  .ig-card:nth-child(3n+2) .watch{ color:var(--red); }
-  .ig-card:nth-child(3n+2) .play-icon{ background:rgba(112,12,12,0.1); border-color:rgba(112,12,12,0.4); }
-  .ig-card:nth-child(3n+2) .play-icon svg{ fill:var(--red); }
-  .ig-card:nth-child(3n){ background:linear-gradient(150deg, var(--red) 0%, rgba(112,12,12,0.78) 100%); }
-  .ig-card:hover{ transform:translateY(-4px); box-shadow:0 20px 32px -18px rgba(112,12,12,0.45); }
-  .ig-card .badge{
-    align-self:flex-start; font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:.08em;
-    color:var(--cream); background:rgba(112,12,12,0.4); padding:5px 9px; border-radius:100px;
+  .ig-embed-wrap[hidden]{ display:none; }
+  .ig-embed-wrap .embed-slot{ min-height:220px; display:flex; align-items:center; justify-content:center; background:var(--card); }
+  .ig-embed-wrap .embed-slot .loading{ font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--taupe); padding:40px 16px; text-align:center; }
+  .ig-embed-wrap .embed-label{
+    display:flex; justify-content:space-between; align-items:center; padding:10px 14px;
+    font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:.08em; color:var(--taupe);
+    border-top:1px solid var(--line);
   }
-  .ig-card .idx{ font-family:var(--display); font-style:italic; font-size:34px; color:rgba(231,227,221,0.5); border-bottom:2px solid var(--black); padding-bottom:2px; display:inline-block; }
-  .ig-card:nth-child(3n+2) .idx{ border-bottom:2px solid var(--black); }
-  .ig-card .watch{
-    font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--cream);
-    display:flex; align-items:center; gap:6px; opacity:0.9;
-  }
-  .ig-card .play-icon{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9);
-    width:46px; height:46px; border-radius:50%; background:rgba(231,227,221,0.16);
-    display:flex; align-items:center; justify-content:center; opacity:0; transition:all .25s ease;
-    border:1px solid rgba(231,227,221,0.5);
-  }
-  .ig-card:hover .play-icon{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-  .ig-card .play-icon svg{ width:16px; height:16px; fill:var(--cream); }
-  @media (max-width:700px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
-
-  /* modal */
-  .ig-modal{
-    position:fixed; inset:0; z-index:200; display:none;
-    background:rgba(112,12,12,0.82); backdrop-filter:blur(4px);
-    align-items:center; justify-content:center; padding:40px 20px;
-  }
-  .ig-modal.open{ display:flex; }
-  .ig-modal-inner{ position:relative; width:100%; max-width:520px; max-height:88vh; overflow-y:auto; background:var(--ivory); }
-  .ig-modal-close{
-    position:absolute; top:12px; right:12px; z-index:2;
-    width:34px; height:34px; border-radius:50%; background:var(--ink); color:var(--ivory);
-    border:none; font-family:var(--mono); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  }
-  .ig-modal-embed{ min-height:300px; display:flex; align-items:center; justify-content:center; padding:20px; }
-  .ig-modal-embed .loading{ font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--taupe); }
-  .ig-modal-fallback{
-    display:block; text-align:center; padding:16px; font-family:var(--mono); font-size:11px; text-transform:uppercase;
-    letter-spacing:.06em; border-top:1px solid var(--line); color:var(--forest);
-  }
+  .ig-embed-wrap .embed-label span:first-child{ color:var(--red); }
+  @media (max-width:700px){ .gallery{ columns:1 100%; } }
 
   /* contact */
   .contact{ padding:120px 0 100px; }
@@ -173,7 +134,8 @@
   footer{ padding:32px 0; }
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--taupe); flex-wrap:wrap; gap:12px; }
 
-  [data-reveal]{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  [data-reveal]{ opacity:1; transform:none; transition:opacity .7s ease, transform .7s ease; }
+  [data-reveal].pre{ opacity:0; transform:translateY(24px); }
   [data-reveal].in{ opacity:1; transform:translateY(0); }
   /* ---------- creative flourishes ---------- */
   body::before{
@@ -211,18 +173,6 @@
   .marquee-track span::after{ content:'✦'; font-style:normal; color:var(--cream); opacity:0.6; margin-left:40px; }
   @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-  .stamp{
-    position:fixed; right:28px; bottom:28px; width:92px; height:92px; z-index:60;
-    display:flex; align-items:center; justify-content:center; pointer-events:none;
-  }
-  .stamp svg{ width:100%; height:100%; animation:spin 14s linear infinite; }
-  .stamp-core{
-    position:absolute; width:30px; height:30px; border-radius:50%; background:var(--red);
-    display:flex; align-items:center; justify-content:center; color:var(--cream); font-family:var(--mono); font-size:13px;
-  }
-  @keyframes spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
-  @media (max-width:700px){ .stamp{ display:none; } }
-
   .ig-card{ transition:transform .35s ease, box-shadow .35s ease; }
   .ig-card:nth-child(6n+1){ transform:rotate(-1.2deg); }
   .ig-card:nth-child(6n+2){ transform:rotate(0.8deg); }
@@ -258,16 +208,19 @@
     </div>
   </div>
 
+</header>
+
 <div class="marquee">
+
   <div class="marquee-track">
     <span>Personal Styling</span>
     <span>Wedding Styling</span>
     <span>Celebrity Styling</span>
-    <span>Paris Fashion Week</span>
+    <span>Product Styling</span>
     <span>Personal Styling</span>
     <span>Wedding Styling</span>
     <span>Celebrity Styling</span>
-    <span>Paris Fashion Week</span>
+    <span>Product Styling</span>
   </div>
 </div>
 
@@ -288,14 +241,6 @@
     <div class="gallery" id="igGallery" data-reveal></div>
   </div>
 </section>
-
-<div class="ig-modal" id="igModal">
-  <div class="ig-modal-inner">
-    <button class="ig-modal-close" id="igModalClose">&times;</button>
-    <div class="ig-modal-embed" id="igModalEmbed"><span class="loading">Loading preview…</span></div>
-    <a class="ig-modal-fallback" id="igModalFallback" href="#" target="_blank" rel="noopener">Open on Instagram ↗</a>
-  </div>
-</div>
 
 <section class="section" id="bio" style="border-bottom:none;">
   <div class="wrap">
@@ -329,7 +274,7 @@
     <div class="contact-list" data-reveal>
       <a href="mailto:business.riasingh@gmail.com"><span>Email</span><span>business.riasingh@gmail.com</span></a>
       <a href="https://www.instagram.com/riaaasinghhh" target="_blank" rel="noopener"><span>Instagram</span><span>@riaaasinghhh</span></a>
-      <a href="#"><span>LinkedIn</span><span>View profile</span></a>
+      <a href="https://www.linkedin.com/in/ria-singh-8980461b1/" target="_blank" rel="noopener"><span>LinkedIn</span><span>View profile</span></a>
     </div>
   </div>
 </section>
@@ -400,49 +345,40 @@
   ];
 
   const gallery = document.getElementById('igGallery');
-  const playSVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
 
-  function renderGallery(filter){
+  function renderGallery(){
     gallery.innerHTML = '';
-    igItems
-      .filter(it => filter === 'all' || it.type === filter)
-      .forEach((it, i) => {
-        const card = document.createElement('div');
-        card.className = 'ig-card';
-        card.dataset.url = it.url;
-        card.innerHTML = `
-          <span class="badge">${it.type === 'reel' ? 'Reel' : 'Post'}</span>
-          <div class="play-icon">${playSVG}</div>
-          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-            <span class="idx">${String(i+1).padStart(2,'0')}</span>
-            <span class="watch">Watch ↗</span>
-          </div>
-        `;
-        card.addEventListener('click', () => openIgModal(it.url));
-        gallery.appendChild(card);
-      });
-  }
-  renderGallery('all');
+    igItems.forEach((it) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'ig-embed-wrap';
+      wrap.dataset.type = it.type;
+      wrap.innerHTML = `
+        <div class="embed-slot"><span class="loading">Loading ${it.type}…</span></div>
+        <div class="embed-label"><span>${it.type === 'reel' ? 'Reel' : 'Post'}</span><a href="${it.url}" target="_blank" rel="noopener">Open ↗</a></div>
+      `;
+      gallery.appendChild(wrap);
 
-  document.querySelectorAll('.work-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      renderGallery(tab.dataset.filter);
+      const slot = wrap.querySelector('.embed-slot');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            io.disconnect();
+            slot.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${it.url}" data-instgrm-version="14" style="margin:0; width:100%; min-width:auto;"><div style="padding:24px 16px; text-align:center; font-family:'Space Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em;"><a href="${it.url}" target="_blank" rel="noopener" style="color:#700C0C; text-decoration:none;">View on Instagram ↗</a></div></blockquote>`;
+            loadIgScript(() => {
+              if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); }
+            });
+          }
+        });
+      }, { rootMargin: '300px' });
+      io.observe(wrap);
     });
-  });
+  }
 
-  /* ---------- Instagram embed modal ---------- */
-  const igModal = document.getElementById('igModal');
-  const igModalEmbed = document.getElementById('igModalEmbed');
-  const igModalFallback = document.getElementById('igModalFallback');
-  const igModalClose = document.getElementById('igModalClose');
   let igScriptLoaded = false;
-
   function loadIgScript(cb){
     if (igScriptLoaded && window.instgrm) { cb(); return; }
     const existing = document.getElementById('ig-embed-script');
-    if (existing) { existing.addEventListener('load', cb, { once:true }); return; }
+    if (existing) { existing.addEventListener('load', cb, { once:true }); if (window.instgrm) cb(); return; }
     const s = document.createElement('script');
     s.id = 'ig-embed-script';
     s.async = true;
@@ -451,52 +387,33 @@
     document.body.appendChild(s);
   }
 
-  function openIgModal(url){
-    igModalFallback.href = url;
-    igModalEmbed.innerHTML = '<span class="loading">Loading preview…</span>';
-    igModal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  renderGallery();
 
-    igModalEmbed.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="margin:0; width:100%;"></blockquote>`;
-
-    loadIgScript(() => {
-      if (window.instgrm && window.instgrm.Embeds) {
-        window.instgrm.Embeds.process();
-      }
+  document.querySelectorAll('.work-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      document.querySelectorAll('.ig-embed-wrap').forEach(wrap => {
+        wrap.hidden = !(filter === 'all' || wrap.dataset.type === filter);
+      });
     });
+  });
+
+  try {
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!mq.matches) {
+      revealEls.forEach(el => el.classList.add('pre'));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); e.target.classList.remove('pre'); io.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      revealEls.forEach(el => io.observe(el));
+    }
+  } catch (e) {
+    console.warn('Reveal animation skipped:', e);
   }
-
-  function closeIgModal(){
-    igModal.classList.remove('open');
-    document.body.style.overflow = '';
-    igModalEmbed.innerHTML = '';
-  }
-
-  igModalClose.addEventListener('click', closeIgModal);
-  igModal.addEventListener('click', (e) => { if (e.target === igModal) closeIgModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeIgModal(); });
-
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => io.observe(el));
-
-  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (mq.matches) { revealEls.forEach(el => el.classList.add('in')); }
 </script>
-
-<div class="stamp" aria-hidden="true">
-  <svg viewBox="0 0 100 100">
-    <defs>
-      <path id="stampCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/>
-    </defs>
-    <text font-family="Space Mono, monospace" font-size="7.2" letter-spacing="2" fill="#700C0C">
-      <textPath href="#stampCircle" startOffset="0%">STYLED BY RIA &#10022; PERSONAL &#10022; WEDDING &#10022; CELEBRITY &#10022;</textPath>
-    </text>
-  </svg>
-  <div class="stamp-core">R</div>
-</div>
 
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-dot" id="cursorDot"></div>
