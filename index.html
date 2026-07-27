@@ -181,6 +181,38 @@
   .ig-card:nth-child(6n+5){ transform:rotate(-0.9deg); }
   .ig-card:nth-child(6n){ transform:rotate(0.6deg); }
   .ig-card:hover{ transform:rotate(0deg) translateY(-6px) scale(1.03) !important; z-index:5; }
+
+  /* ---------- mobile responsiveness ---------- */
+  @media (max-width:860px){
+    .wrap{ padding:0 20px; }
+    nav{ padding:14px 20px; }
+    .nav-logo{ height:20px; }
+    header.hero{ padding:110px 0 0; min-height:auto; padding-bottom:40px; }
+    .hero-logo-img{ width:min(88vw, 380px); }
+    .hero-sub{ flex-direction:column; align-items:flex-start; padding:28px 20px 36px; }
+    .hero-sub p{ max-width:100%; }
+    .marquee-track span{ font-size:15px; }
+    .section{ padding:64px 0; }
+    .section-head{ margin-bottom:36px; padding-bottom:20px; flex-direction:column; align-items:flex-start; gap:12px; }
+    .section-note{ max-width:100%; }
+    .bio{ grid-template-columns:1fr; gap:32px; }
+    .bio-photo{ max-width:280px; margin:0 auto; }
+    .bio-copy p{ font-size:16px; }
+    .bio-copy p:first-of-type{ font-size:19px; }
+    .work-tabs{ flex-wrap:wrap; }
+    .gallery{ columns:1 100%; }
+    .contact{ padding:64px 0 60px; }
+    .contact-title{ margin-bottom:28px; }
+    .contact-list a{ flex-direction:column; align-items:flex-start; gap:4px; padding:16px 0; }
+    footer .wrap{ flex-direction:column; align-items:flex-start; gap:6px; padding:0 20px; }
+  }
+  @media (max-width:480px){
+    .hero-eyebrow{ padding:0 20px; font-size:10px; }
+    .hero-line{ font-size:16px; }
+    .section-title{ font-size:clamp(26px,7vw,36px); }
+    .contact-title{ font-size:clamp(32px,10vw,52px); }
+    .marquee-track span{ font-size:13px; }
+  }
 </style>
 </head>
 <body>
